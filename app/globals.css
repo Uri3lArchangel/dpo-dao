@@ -2,26 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+.voteHistory{
+  display: flex;
+  flex-direction: column;
+  margin: 4em 0;
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+}
+.voteHistory li{
+  display: grid;
+  grid-template-areas: 
+  "topic topic topic outcome"
+  "topic topic topic outcome"
+  "yes no timer conclude"
+  ;
+  align-items: center;
+  gap: 1em 2em;
+box-shadow: 1px 1px 10px #0003;
+margin: 1em;
+padding: 1em;
+border-radius: 10px;
+}
+#votetopic{
+  grid-area: topic;
+}
+#yesBtn{
+  grid-area: yes;
+}
+#noBtn{
+  grid-area: no;
+}
+#timer{
+  grid-area: timer;
+}
+#outcome{
+  grid-area: outcome;
+}
+#concludeBtn{
+  grid-area: conclude;
 }
