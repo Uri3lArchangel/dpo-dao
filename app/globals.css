@@ -12,9 +12,11 @@
 .voteHistory li{
   display: grid;
   grid-template-areas: 
-  "topic topic topic outcome"
-  "topic topic topic outcome"
-  "yes no timer conclude"
+  "topic topic topic outcome outcome"
+  "topic topic topic outcome outcome"
+  "yesBtn noBtn timer conclude yes"
+  "unfreeze unfreeze timer conclude no"
+
   ;
   align-items: center;
   gap: 1em 2em;
@@ -23,17 +25,31 @@ margin: 1em;
 padding: 1em;
 border-radius: 10px;
 }
+#unfreezeBtn{
+  grid-area: unfreeze;
+
+}
 #votetopic{
   grid-area: topic;
 }
 #yesBtn{
-  grid-area: yes;
+  grid-area: yesBtn;
 }
 #noBtn{
-  grid-area: no;
+  grid-area: noBtn;
 }
 #timer{
   grid-area: timer;
+  user-select: none !important;
+  cursor: default !important;
+}
+#yes{
+  grid-area: yes;
+
+}
+#no{
+  grid-area: no;
+
 }
 #outcome{
   grid-area: outcome;

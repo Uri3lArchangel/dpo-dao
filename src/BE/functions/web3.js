@@ -9,17 +9,23 @@ let web3instance=null
 let contractERC=null
 
  const ContractInit=async()=>{
-const web3 = new Web3(window.ethereum || "https://arb1.arbitrum.io/rpc")
-web3instance=web3
-const _contract = new web3.eth.Contract(dao.output.abi,daoAddr)
-const _contractERC =new web3.eth.Contract(erc.output.abi,ercAddr)
+    if(window){
+        const web3 = new Web3(window.ethereum)
+        web3instance=web3
+
+    }else{
+        const web3 = new Web3( "https://arb1.arbitrum.io/rpc")
+        web3instance=web3
+    }
+const _contract = new web3instance.eth.Contract(dao.output.abi,daoAddr)
+const _contractERC =new web3instance.eth.Contract(erc.output.abi,ercAddr)
 contract = _contract;
 contractERC = _contractERC;
 }
 
-export const createPool=async(address,topic)=>{
+export const createPoll=async(address,topic)=>{
    try{ await ContractInit()
-    if(!web3instance || !contract || !address){
+    if(!web3instance || !contract || !address || !topic){
         return
     }
     const pollId =await contract.methods.createPoll(topic).send({from:address})
@@ -72,23 +78,26 @@ export const unfreezeToken=async(address,pollId)=>{
  export const fetchPolls=async()=>{
     try{ await ContractInit()
      if(!web3instance || !contract ){
-         return{status:"error",msg:""}
+         return{status:"error",msg:"",data:[]}
      }
     const polls=await contract.methods.allPolls().call()
      return {status:'success',msg:``,data:polls}
  }catch(err){
-     return {status:"error",msg:err.message}
+     return {status:"error",msg:err.message,data:[]}
  }
  }
  export const getAdmin=async()=>{
-    try{ await ContractInit()
-     if(!web3instance || !contract ){
-         return{status:"error",msg:""}
+    try{
+        const web3 = new Web3( "https://arb1.arbitrum.io/rpc")
+        const _contract = new web3.eth.Contract(dao.output.abi,daoAddr)
+
+     if(!web3 || !_contract ){
+         return{status:"error",msg:"",data:''}
      }
-    const admin=await contract.methods.admin().call()
-     return {status:'success',msg:``,data:admin}
+    const admin=await _contract.methods.admin().call()
+     return {status:'success',msg:``,data:String(admin)}
  }catch(err){
-     return {status:"error",msg:err.message}
+     return {status:"error",msg:String(err.message)}
  }
  }
  
