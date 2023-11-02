@@ -8,7 +8,7 @@ const ended = polls.filter((e)=>e.ended)
   return (
     <>
     {ended.map((item, i) => (
-            <li>
+            <li key={i}>
               <p id="votetopic">{item.pollTopic}</p>
               <p id="yes">Yes:{item.yesVotes}</p>
               <p id="no">no:{item.noVotes}</p>
